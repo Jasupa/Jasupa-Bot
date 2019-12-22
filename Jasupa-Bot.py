@@ -1,6 +1,8 @@
 import discord #Importeer alle code van Discord
 import os
 import youtube_dl
+import shutil
+from os import system
 
 if not discord.opus.is_loaded():
     discord.opus.load_opus('libopus.so')
