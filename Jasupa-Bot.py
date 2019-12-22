@@ -11,7 +11,7 @@ bot = commands.Bot(command_prefix = 'ß') #Client variabel maken en prefix zette
 async def on_ready():
     print("De bot is klaar met opstarten!")
 
-@bot.commands(pass_context=True, aliases=['j','joi'])
+@bot.command(pass_context=True, aliases=['j','joi'])
 async def join(ctx):
     global voice
     channel = ctx.message.author.voice.channel
