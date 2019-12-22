@@ -149,7 +149,7 @@ async def play(ctx, url: str):
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = 0.07
 
-    nname = name.rsplit("-", 2)
+    name = name.rsplit("-", 2)
     await ctx.send(f"Playing: {nname[0]}")
     print("playing\n")
 
