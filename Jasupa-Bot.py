@@ -35,4 +35,4 @@ async def join(ctx):
 
 
 #Maak verbinding met Discord en start de bot
-client.run(os.environ['token'])
+bot.run(os.environ['token'])
