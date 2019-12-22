@@ -1,4 +1,5 @@
 import discord #Importeer alle code van Discord
+import os
 from discord.ext import commands #Importeer alle command-commands van Discord
 
 client = commands.Bot(command_prefix = 'ß') #Client variabel maken en prefix zetten
