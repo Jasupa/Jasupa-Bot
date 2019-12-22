@@ -249,7 +249,7 @@ async def repeat(self):
     entry = self._current_entry
 
     if self.is_repeatAll:
-    if not self.is_repeatNone:
+    if !self.is_repeatNone:
          self.playlist._add_entry(entry)
     if self.is_repeatSingle:            
         self.playlist.promote_last()
