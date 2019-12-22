@@ -9,4 +9,4 @@ async def on_ready():
     print("De bot is klaar met opstarten!")
 
 #Maak verbinding met Discord en start de bot
-client.run(process.env.token)
+client.run('NTc3ODgxNzk4ODIyODU0NjU3.Xf-IYQ.d40fa2Q7uaanLmTsPENY4cyixq8')
