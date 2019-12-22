@@ -244,13 +244,5 @@ async def next(ctx):
         print("No music playing")
         await ctx.send("No music playing failed")
 
-@bot.command(pass_context=True, aliases=['r', 'rep'])
-async def repeat(ctx):
-    voicemm = get(bot.voice_clients, guild=ctx.guild)
-
-    await voicemm.repeat
-    
-
-
 #Maak verbinding met Discord en start de bot
 bot.run(os.environ['token'])
