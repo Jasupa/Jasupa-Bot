@@ -1,6 +1,8 @@
 import discord #Importeer alle code van Discord
 import os
 import youtube_dl
+import ctypes
+import ctypes.util
 from discord.utils import get
 
 from discord.ext import commands #Importeer alle command-commands van Discord
