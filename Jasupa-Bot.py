@@ -96,6 +96,49 @@ async def play(ctx, url: str):
     await ctx.send(f"Playing: {nname[0]}")
     print("playing\n")
 
+@bot.command(pass_context=True, aliases=['pa', 'pau'])
+async def pause(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_playing():
+        print("Music paused")
+        voice.pause()
+        await ctx.send("Music paused")
+    else:
+        print("Music not playing failed pause")
+        await ctx.send("Music not playing failed pause")
+
+
+@bot.command(pass_context=True, aliases=['r', 'res'])
+async def resume(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_paused():
+        print("Resumed music")
+        voice.resume()
+        await ctx.send("Resumed music")
+    else:
+        print("Music is not paused")
+        await ctx.send("Music is not paused")
+
+
+@bot.command(pass_context=True, aliases=['s', 'sto'])
+async def stop(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_playing():
+        print("Music stopped")
+        voice.stop()
+        await ctx.send("Music stopped")
+    else:
+        print("No music playing failed to stop")
+        await ctx.send("No music playing failed to stop")
+
+
+
 
 
 #Maak verbinding met Discord en start de bot
