@@ -1,0 +1,1 @@
+worker: node Jasupa-Bot.py
