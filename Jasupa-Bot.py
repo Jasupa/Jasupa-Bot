@@ -27,7 +27,7 @@ async def join(ctx):
     if voice and voice.is_connected():
         await voice.move_to(channel)
     else:
-        voice = await channel.connect():
+        voice = await channel.connect()
         print("De bot is verbonden met {channel}\n")
     
     await ctx.send("{channel} gejoined")
