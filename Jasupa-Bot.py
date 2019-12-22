@@ -244,5 +244,18 @@ async def next(ctx):
         print("No music playing")
         await ctx.send("No music playing failed")
 
+@bot.command(pass_context=True, aliases=['r', 'rep'])
+async def repeat(self):
+    entry = self._current_entry
+
+    if self.is_repeatAll:
+    if not self.is_repeatNone:
+         self.playlist._add_entry(entry)
+    if self.is_repeatSingle:            
+        self.playlist.promote_last()
+
+    if self._current_player:
+        self._current_player.after = None
+
 #Maak verbinding met Discord en start de bot
 bot.run(os.environ['token'])
