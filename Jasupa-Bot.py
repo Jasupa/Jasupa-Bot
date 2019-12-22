@@ -244,6 +244,20 @@ async def next(ctx):
         print("No music playing")
         await ctx.send("No music playing failed")
 
+@bot.command(name='loop')
+async def loop(self, ctx: commands.Context):
+    """Loops the currently playing song.
+    Invoke this command again to unloop the song.
+    """
+
+    if not ctx.voice_state.is_playing:
+    return await ctx.send('Nothing being played at the moment.')
+
+    # Inverse boolean value to loop and unloop.
+    ctx.voice_state.loop = not ctx.voice_state.loop
+    await ctx.message.add_reaction('✅')
+
+
 
 #Maak verbinding met Discord en start de bot
 bot.run(os.environ['token'])
