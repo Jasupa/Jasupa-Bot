@@ -1,1 +1,1 @@
-worker: node Jasupa-Bot.py
+worker: python Jasupa-Bot.py
