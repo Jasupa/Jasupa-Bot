@@ -1,8 +1,22 @@
 import discord #Importeer alle code van Discord
 import os
 import youtube_dl
+
 import ctypes
 import ctypes.util
+
+print("ctypes - Find opus:")
+a = ctypes.util.find_library('opus')
+print(a)
+
+print("Discord - Load Opus:")
+b = discord.opus.load_opus(a)
+print(b)
+
+print("Discord - Is loaded:")
+c = discord.opus.is_loaded()
+print(c)
+
 from discord.utils import get
 
 from discord.ext import commands #Importeer alle command-commands van Discord
