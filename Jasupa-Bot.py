@@ -245,17 +245,12 @@ async def next(ctx):
         await ctx.send("No music playing failed")
 
 @bot.command(pass_context=True, aliases=['r', 'rep'])
-async def repeat(self):
-    entry = self._current_entry
+async def repeat(ctx):
+    voicemm = get(bot.voice_clients, guild=ctx.guild)
 
-    if self.is_repeatAll:
-    if !self.is_repeatNone:
-         self.playlist._add_entry(entry)
-    if self.is_repeatSingle:            
-        self.playlist.promote_last()
+    await voicemm.repeat
+    
 
-    if self._current_player:
-        self._current_player.after = None
 
 #Maak verbinding met Discord en start de bot
 bot.run(os.environ['token'])
