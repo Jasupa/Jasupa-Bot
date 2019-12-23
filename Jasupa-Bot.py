@@ -5,6 +5,7 @@ import youtube_dl
 import spotdl
 import sys
 import datetime
+import random
 
 from os import system
 
