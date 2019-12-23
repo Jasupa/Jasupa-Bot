@@ -257,17 +257,15 @@ async def volume(ctx, volume: int):
     ctx.voice_client.source.volume = volume / 100
     await ctx.send(f"Changed volume to {volume}%")
 
-waifuLinks = ["https://www.thiswaifudoesnotexist.net/"]
-
 @bot.command(pass_context=True, aliases=['wa','wai'])
 async def waifu(ctx):
     chosen_image = random.choice(waifuLinks)
 
     embed = discord.Embed(color=0xf2fa07)
-    embed.set_image(waifuLinks)
+    embed.set_image("https://www.thiswaifudoesnotexist.net")
     embed.set_footer(text=f"Requested by: {ctx.author.name}")
 
-    await ctx.send(embed=embed)
+    await ctx.send(embed=)
 
 
 #Maak verbinding met Discord en start de bot
