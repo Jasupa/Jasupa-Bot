@@ -4,6 +4,7 @@ import wavelink
 import youtube_dl
 import spotdl
 import sys
+import datetime
 
 from os import system
 
@@ -267,6 +268,19 @@ async def volume(ctx, volume: int):
 
     ctx.voice_client.source.volume = volume / 100
     await ctx.send(f"Changed volume to {volume}%")
+
+waifuLinks = ["https://www.thiswaifudoesnotexist.net/"]
+
+@bot.command(pass_context=True, aliases=['wa','wai'])
+async def waifu(ctx):
+    chosen_image = random.choice(waifuLinks)
+
+    embed = discord.Embed(color=f2fa07, timestamp=datetime.datetime.utonow())
+    embed.add_image(url=chosen_image)
+    embed.add_footer(text=f"Requested by:" {ctx.author.name})
+
+    await ctx.send(embed=embed)
+
 
 #Maak verbinding met Discord en start de bot
 bot.run(os.environ['token'])
