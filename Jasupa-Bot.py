@@ -232,20 +232,6 @@ async def queue(ctx, *url: str):
 
     print("Song added to queue\n")
 
-
-@bot.command(pass_context=True, aliases=['n', 'nex'])
-async def next(ctx):
-    voice = get(bot.voice_clients, guild=ctx.guild)
-
-    if voice and voice.is_playing():
-        print("Playing Next Song")
-        voice.stop()
-        await ctx.send("Next Song")
-    else:
-        print("No music playing")
-        await ctx.send("No music playing failed")
-
-
 @bot.command(pass_context=True, aliases=['n', 'nex'])
 async def next(ctx):
     voice = get(bot.voice_clients, guild=ctx.guild)
