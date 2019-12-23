@@ -259,7 +259,6 @@ async def volume(ctx, volume: int):
 
 @bot.command(pass_context=True, aliases=['wa','wai'])
 async def waifu(ctx):
-    chosen_image = random.choice(waifuLinks)
 
     embed = discord.Embed(color=0xf2fa07)
     embed.set_image("https://www.thiswaifudoesnotexist.net")
