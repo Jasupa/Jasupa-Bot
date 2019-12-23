@@ -265,7 +265,7 @@ async def waifu(ctx):
     embed.set_image("https://www.thiswaifudoesnotexist.net")
     embed.set_footer(text=f"Requested by: {ctx.author.name}")
 
-    await ctx.send(embed=)
+    await ctx.send(embed=embed)
 
 
 #Maak verbinding met Discord en start de bot
