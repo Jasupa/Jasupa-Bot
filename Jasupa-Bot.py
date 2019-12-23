@@ -56,9 +56,8 @@ async def leave(ctx):
         print("Bot was told to leave voice channel, but was not in one")
         await ctx.send("Don't think I am in a voice channel")
 
-
 @bot.command(pass_context=True, aliases=['p', 'pla'])
-async def play(ctx, url: str):
+async def play(ctx, *url: str):
 
     def check_queue():
         Queue_infile = os.path.isdir("./Queue")
@@ -126,35 +125,30 @@ async def play(ctx, url: str):
 
     ydl_opts = {
         'format': 'bestaudio/best',
-        'quiet': True,
+        'quiet': False,
+        'outtmpl': "./song.mp3",
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
     }
+
+    song_search = " ".join(url)
+
     try:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             print("Downloading audio now\n")
-            ydl.download([url])
+            ydl.download([f"ytsearch1:{song_search}"])
     except:
-        print("FALLBACK: youtube-dl does not support this URL, using Spotify (This is normal if spotify URL)")
+        print("FALLBACK: youtube-dl does not support this URL, using Spotify (This is normal if Spotify URL)")
         c_path = os.path.dirname(os.path.realpath(__file__))
-        system("spotdl -f " + '"' + c_path + '"' + " -s " + url)  # make sure there are spaces in the -s
-
-    for file in os.listdir("./"):
-        if file.endswith(".mp3"):
-            name = file
-            print(f"Renamed File: {file}\n")
-            os.rename(file, "song.mp3")
+        system("spotdl -ff song -f " + '"' + c_path + '"' + " -s " + song_search)
 
     voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: check_queue())
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = 0.07
 
-    nname = name.rsplit("-", 2)
-    await ctx.send(f"Playing: {nname[0]}")
-    print("playing\n")
 
 @bot.command(pass_context=True, aliases=['pa', 'pau'])
 async def pause(ctx):
