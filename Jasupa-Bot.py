@@ -1,6 +1,9 @@
 import discord #Importeer alle code van Discord
 import os
 import wavelink
+import youtube_dl
+import spotdl
+
 from os import system
 
 if not discord.opus.is_loaded():
