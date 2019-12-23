@@ -249,7 +249,6 @@ async def next(ctx):
 async def loop(ctx):
     entry = ctx._current_entry
 
-    if ctx.is_repeatAll:
     if not ctx.is_repeatNone:
         ctx.playlist._add_entry(entry)
     if ctx.is_repeatSingle:            
