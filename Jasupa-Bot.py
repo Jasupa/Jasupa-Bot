@@ -3,6 +3,7 @@ import os
 import wavelink
 import youtube_dl
 import spotdl
+import sys
 
 from os import system
 
@@ -248,16 +249,16 @@ async def next(ctx):
 
 @bot.command(pass_context=True, aliases=['re', 'repe'])
 async def repeat(self, ctx):
-     """Repeat the currently playing song.
-     Examples
+    """Repeat the currently playing song.
+    Examples
     ----------
     <prefix>repeat
-        {ctx.prefix}repeat
+    {ctx.prefix}repeat
     """
     player = self.bot.wavelink.get_player(ctx.guild.id, cls=Player)
 
     if not player.is_connected:
-         return
+        return
 
     if await self.has_perms(ctx, manage_guild=True):
         await ctx.send(f'I am now repeating the song. Requested by {ctx.author.mention}', delete_after=25)
@@ -271,7 +272,7 @@ async def do_repeat(self, ctx):
     if not player.entries:
         await player.queue.put(player.current)
     else:
-         player.queue._queue.appendleft(player.current)
+        player.queue._queue.appendleft(player.current)
 
     player.update = True
 
