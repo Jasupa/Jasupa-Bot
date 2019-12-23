@@ -277,7 +277,7 @@ async def waifu(ctx):
 
     embed = discord.Embed(color=f2fa07, timestamp=datetime.datetime.utonow())
     embed.add_image(url=chosen_image)
-    embed.add_footer(text=f"Requested by:" {ctx.author.name})
+    embed.add_footer(text=f"Requested by: {ctx.author.name}")
 
     await ctx.send(embed=embed)
 
