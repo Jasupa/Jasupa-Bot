@@ -262,7 +262,7 @@ async def repeat(ctx):
 
     if await ctx.has_perms(ctx, manage_guild=True):
         await ctx.send(f'I am now repeating the song. Requested by {ctx.author.mention}', delete_after=25)
-        return await ctx..do_repeat(ctx)
+        return await ctx.do_repeat(ctx)
 
     await ctx.do_vote(ctx, player, 'repeat')
 
