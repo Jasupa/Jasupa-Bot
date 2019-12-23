@@ -261,7 +261,7 @@ async def volume(ctx, volume: int):
 async def waifu(ctx):
 
     embed = discord.Embed(color=0xf2fa07)
-    embed.set_image(url = random.choice(['https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjH6o600MvmAhVLKuwKHRSjDsIQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.pinterest.at%2Fpin%2F629659591630156892%2F&psig=AOvVaw3wEMpds-K_8-2Q3ydZ1JRU&ust=1577185607448716','https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjV2Y7G0MvmAhWDjKQKHWixBSQQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F835277062116586105%2F&psig=AOvVaw3wEMpds-K_8-2Q3ydZ1JRU&ust=1577185607448716']))
+    embed.set_image(url = random.choice(['https://remilia.cirno.pw/image/36828/7c424239-8414-4234-9c63-a122c57fd3f1.jpg','https://remilia.cirno.pw/image/36828/691b4216-d95b-4068-a9f4-c32edc7bb72c.jpg']))
     embed.set_footer(text=f"Requested by: {ctx.author.name}")
 
     await ctx.send(embed=embed)
