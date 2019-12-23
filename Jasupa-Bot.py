@@ -27,20 +27,13 @@ async def join(ctx):
     channel = ctx.message.author.voice.channel
     voice = get(bot.voice_clients, guild=ctx.guild)
 
-    if voice and voice.is_connected():
-        await voice.move_to(channel)
-    else:
-        voice = await channel.connect()
+    if voice is not None:
+        return await voice.move_to(channel)
 
-    await voice.disconnect()
-
-    if voice and voice.is_connected():
-        await voice.move_to(channel)
-    else:
-        voice = await channel.connect()
-        print(f"The bot has connected to {channel}\n")
+    await channel.connect()
 
     await ctx.send(f"Joined {channel}")
+
 
 
 @bot.command(pass_context=True, aliases=['l', 'lea'])
