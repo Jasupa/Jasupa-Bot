@@ -6,6 +6,7 @@ import spotdl
 import sys
 import datetime
 import random
+import colorsys
 
 from os import system
 
@@ -262,7 +263,7 @@ waifuLinks = ["https://www.thiswaifudoesnotexist.net/"]
 async def waifu(ctx):
     chosen_image = random.choice(waifuLinks)
 
-    embed = discord.Embed(color=f2fa07, timestamp=datetime.datetime.utonow())
+    embed = discord.Embed(color='#f2fa07', timestamp=datetime.datetime.utonow())
     embed.add_image(url=chosen_image)
     embed.add_footer(text=f"Requested by: {ctx.author.name}")
 
