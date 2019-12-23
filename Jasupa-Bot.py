@@ -263,7 +263,7 @@ waifuLinks = ["https://www.thiswaifudoesnotexist.net/"]
 async def waifu(ctx):
     chosen_image = random.choice(waifuLinks)
 
-    embed = discord.Embed(color=0xf2fa07, timestamp=datetime.datetime.utonow())
+    embed = discord.Embed(color=0xf2fa07)
     embed.add_image(url=chosen_image)
     embed.add_footer(text=f"Requested by: {ctx.author.name}")
 
