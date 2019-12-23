@@ -248,26 +248,26 @@ async def next(ctx):
         await ctx.send("No music playing failed")
 
 @bot.command(pass_context=True, aliases=['re', 'repe'])
-async def repeat(self, ctx):
+async def repeat(ctx):
     """Repeat the currently playing song.
     Examples
     ----------
     <prefix>repeat
     {ctx.prefix}repeat
     """
-    player = self.bot.wavelink.get_player(ctx.guild.id, cls=Player)
+    player = ctx.bot.wavelink.get_player(ctx.guild.id, cls=Player)
 
     if not player.is_connected:
         return
 
-    if await self.has_perms(ctx, manage_guild=True):
+    if await ctx.has_perms(ctx, manage_guild=True):
         await ctx.send(f'I am now repeating the song. Requested by {ctx.author.mention}', delete_after=25)
-        return await self.do_repeat(ctx)
+        return await ctx..do_repeat(ctx)
 
-    await self.do_vote(ctx, player, 'repeat')
+    await ctx.do_vote(ctx, player, 'repeat')
 
-async def do_repeat(self, ctx):
-    player = self.bot.wavelink.get_player(ctx.guild.id, cls=Player)
+async def do_repeat(ctx):
+    player = ctx.bot.wavelink.get_player(ctx.guild.id, cls=Player)
 
     if not player.entries:
         await player.queue.put(player.current)
