@@ -12,94 +12,265 @@ from discord.ext import commands #Importeer alle command-commands van Discord
 
 bot = commands.Bot(command_prefix = 'ß') #Client variabel maken en prefix zetten
 
-class Bot(commands.Bot):
-
-    def __init__(self):
-        super(Bot, self).__init__(command_prefix=['audio ', 'wave ','aw '])
-
-        self.add_cog(Music(self))
-
-    async def on_ready(self):
-        print(f'Logged in as {self.user.name} | {self.user.id}')
+#Wat gebeurt er als de bot klaar is met opstarten?
+@bot.event
+async def on_ready():
+    print("De bot is klaar met opstarten!")
 
 
-class Music:
+@bot.command(pass_context=True, aliases=['j', 'joi'])
+async def join(ctx):
+    channel = ctx.message.author.voice.channel
+    voice = get(bot.voice_clients, guild=ctx.guild)
 
-    def __init__(self, bot):
-        self.bot = bot
+    if voice and voice.is_connected():
+        await voice.move_to(channel)
+    else:
+        voice = await channel.connect()
 
-        if not hasattr(bot, 'wavelink'):
-            self.bot.wavelink = wavelink.Client(self.bot)
+    await voice.disconnect()
 
-        self.bot.loop.create_task(self.start_nodes())
+    if voice and voice.is_connected():
+        await voice.move_to(channel)
+    else:
+        voice = await channel.connect()
+        print(f"The bot has connected to {channel}\n")
 
-    async def start_nodes(self):
-        await self.bot.wait_until_ready()
+    await ctx.send(f"Joined {channel}")
 
-        # Initiate our nodes. For this example we will use one server.
-        # Region should be a discord.py guild.region e.g sydney or us_central (Though this is not technically required)
-        await self.bot.wavelink.initiate_node(host='0.0.0.0',
-                                              port=80,
-                                              rest_uri='http://0.0.0.0:2333',
-                                              password='youshallnotpass',
-                                              identifier='TEST',
-                                              region='us_central')
 
-    @commands.command(name='connect')
-    async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
-        if not channel:
+@bot.command(pass_context=True, aliases=['l', 'lea'])
+async def leave(ctx):
+    channel = ctx.message.author.voice.channel
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_connected():
+        await voice.disconnect()
+        print(f"The bot has left {channel}")
+        await ctx.send(f"Left {channel}")
+    else:
+        print("Bot was told to leave voice channel, but was not in one")
+        await ctx.send("Don't think I am in a voice channel")
+
+
+@bot.command(pass_context=True, aliases=['p', 'pla'])
+async def play(ctx, url: str):
+
+    def check_queue():
+        Queue_infile = os.path.isdir("./Queue")
+        if Queue_infile is True:
+            DIR = os.path.abspath(os.path.realpath("Queue"))
+            length = len(os.listdir(DIR))
+            still_q = length - 1
             try:
-                channel = ctx.author.voice.channel
-            except AttributeError:
-                raise discord.DiscordException('No channel to join. Please either specify a valid channel or join one.')
+                first_file = os.listdir(DIR)[0]
+            except:
+                print("No more queued song(s)\n")
+                queues.clear()
+                return
+            main_location = os.path.dirname(os.path.realpath(__file__))
+            song_path = os.path.abspath(os.path.realpath("Queue") + "\\" + first_file)
+            if length != 0:
+                print("Song done, playing next queued\n")
+                print(f"Songs still in queue: {still_q}")
+                song_there = os.path.isfile("song.mp3")
+                if song_there:
+                    os.remove("song.mp3")
+                shutil.move(song_path, main_location)
+                for file in os.listdir("./"):
+                    if file.endswith(".mp3"):
+                        os.rename(file, 'song.mp3')
 
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        await ctx.send(f'Connecting to **`{channel.name}`**')
-        await player.connect(channel.id)
+                voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: check_queue())
+                voice.source = discord.PCMVolumeTransformer(voice.source)
+                voice.source.volume = 0.07
 
-    @commands.command()
-    async def play(self, ctx, *, query: str):
-        tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
+            else:
+                queues.clear()
+                return
 
-        if not tracks:
-            return await ctx.send('Could not find any songs with that query.')
-
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if not player.is_connected:
-            await ctx.invoke(self.connect_)
-
-        await ctx.send(f'Added {str(tracks[0])} to the queue.')
-        await player.play(tracks[0])
-        
-    @commands.command(name='repeat')
-    async def repeat_(self, ctx):
-        """Repeat the currently playing song.
-        Examples
-        ----------
-        <prefix>repeat
-            {ctx.prefix}repeat
-        """
-        player = self.bot.wavelink.get_player(ctx.guild.id, cls=Player)
-
-        if not player.is_connected:
-            return
-
-        if await self.has_perms(ctx, manage_guild=True):
-            await ctx.send(f'I am now repeating the song. Requested by {ctx.author.mention}', delete_after=25)
-            return await self.do_repeat(ctx)
-
-        await self.do_vote(ctx, player, 'repeat')
-
-    async def do_repeat(self, ctx):
-        player = self.bot.wavelink.get_player(ctx.guild.id, cls=Player)
-
-        if not player.entries:
-            await player.queue.put(player.current)
         else:
-            player.queue._queue.appendleft(player.current)
+            queues.clear()
+            print("No songs were queued before the ending of the last song\n")
 
-        player.update = True    
 
+
+    song_there = os.path.isfile("song.mp3")
+    try:
+        if song_there:
+            os.remove("song.mp3")
+            queues.clear()
+            print("Removed old song file")
+    except PermissionError:
+        print("Trying to delete song file, but it's being played")
+        await ctx.send("ERROR: Music playing")
+        return
+
+
+    Queue_infile = os.path.isdir("./Queue")
+    try:
+        Queue_folder = "./Queue"
+        if Queue_infile is True:
+            print("Removed old Queue Folder")
+            shutil.rmtree(Queue_folder)
+    except:
+        print("No old Queue folder")
+
+    await ctx.send("Getting everything ready now")
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'quiet': True,
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+    }
+    try:
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            print("Downloading audio now\n")
+            ydl.download([url])
+    except:
+        print("FALLBACK: youtube-dl does not support this URL, using Spotify (This is normal if spotify URL)")
+        c_path = os.path.dirname(os.path.realpath(__file__))
+        system("spotdl -f " + '"' + c_path + '"' + " -s " + url)  # make sure there are spaces in the -s
+
+    for file in os.listdir("./"):
+        if file.endswith(".mp3"):
+            name = file
+            print(f"Renamed File: {file}\n")
+            os.rename(file, "song.mp3")
+
+    voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: check_queue())
+    voice.source = discord.PCMVolumeTransformer(voice.source)
+    voice.source.volume = 0.07
+
+    nname = name.rsplit("-", 2)
+    await ctx.send(f"Playing: {nname[0]}")
+    print("playing\n")
+
+@bot.command(pass_context=True, aliases=['pa', 'pau'])
+async def pause(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_playing():
+        print("Music paused")
+        voice.pause()
+        await ctx.send("Music paused")
+    else:
+        print("Music not playing failed pause")
+        await ctx.send("Music not playing failed pause")
+
+
+@bot.command(pass_context=True, aliases=['r', 'res'])
+async def resume(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_paused():
+        print("Resumed music")
+        voice.resume()
+        await ctx.send("Resumed music")
+    else:
+        print("Music is not paused")
+        await ctx.send("Music is not paused")
+
+
+@bot.command(pass_context=True, aliases=['s', 'sto'])
+async def stop(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_playing():
+        print("Music stopped")
+        voice.stop()
+        await ctx.send("Music stopped")
+    else:
+        print("No music playing failed to stop")
+        await ctx.send("No music playing failed to stop")
+
+queues = {}
+
+@bot.command(pass_context=True, aliases=['q', 'que'])
+async def queue(ctx, url: str):
+    Queue_infile = os.path.isdir("./Queue")
+    if Queue_infile is False:
+        os.mkdir("Queue")
+    DIR = os.path.abspath(os.path.realpath("Queue"))
+    q_num = len(os.listdir(DIR))
+    q_num += 1
+    add_queue = True
+    while add_queue:
+        if q_num in queues:
+            q_num += 1
+        else:
+            add_queue = False
+            queues[q_num] = q_num
+
+    queue_path = os.path.abspath(os.path.realpath("Queue") + f"\song{q_num}.%(ext)s")
+
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'quiet': True,
+        'outtmpl': queue_path,
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+    }
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        print("Downloading audio now\n")
+        ydl.download([url])
+    await ctx.send("Adding song " + str(q_num) + " to the queue")
+
+    print("Song added to queue\n")
+
+@bot.command(pass_context=True, aliases=['n', 'nex'])
+async def next(ctx):
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_playing():
+        print("Playing Next Song")
+        voice.stop()
+        await ctx.send("Next Song")
+    else:
+        print("No music playing")
+        await ctx.send("No music playing failed")
+
+@bot.command(pass_context=True, aliases=['re', 'repe'])
+async def repeat(self, ctx):
+     """Repeat the currently playing song.
+     Examples
+    ----------
+    <prefix>repeat
+        {ctx.prefix}repeat
+    """
+    player = self.bot.wavelink.get_player(ctx.guild.id, cls=Player)
+
+    if not player.is_connected:
+         return
+
+    if await self.has_perms(ctx, manage_guild=True):
+        await ctx.send(f'I am now repeating the song. Requested by {ctx.author.mention}', delete_after=25)
+        return await self.do_repeat(ctx)
+
+    await self.do_vote(ctx, player, 'repeat')
+
+async def do_repeat(self, ctx):
+    player = self.bot.wavelink.get_player(ctx.guild.id, cls=Player)
+
+    if not player.entries:
+        await player.queue.put(player.current)
+    else:
+         player.queue._queue.appendleft(player.current)
+
+    player.update = True
 
 #Maak verbinding met Discord en start de bot
 bot.run(os.environ['token'])
