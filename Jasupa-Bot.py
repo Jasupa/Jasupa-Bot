@@ -187,7 +187,7 @@ async def stop(ctx):
 queues = {}
 
 @bot.command(pass_context=True, aliases=['q', 'que'])
-async def queue(ctx, url: str):
+async def queue(ctx, *url: str):
     Queue_infile = os.path.isdir("./Queue")
     if Queue_infile is False:
         os.mkdir("Queue")
@@ -215,12 +215,35 @@ async def queue(ctx, url: str):
         }],
     }
 
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        print("Downloading audio now\n")
-        ydl.download([url])
+    song_search = " ".join(url)
+
+    try:
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            print("Downloading audio now\n")
+            ydl.download([f"ytsearch1:{song_search}"])
+    except:
+        print("FALLBACK: youtube-dl does not support this URL, using Spotify (This is normal if Spotify URL)")
+        q_path = os.path.abspath(os.path.realpath("Queue"))
+        system(f"spotdl -ff song{q_num} -f " + '"' + q_path + '"' + " -s " + song_search)
+
+
     await ctx.send("Adding song " + str(q_num) + " to the queue")
 
     print("Song added to queue\n")
+
+
+@bot.command(pass_context=True, aliases=['n', 'nex'])
+async def next(ctx):
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_playing():
+        print("Playing Next Song")
+        voice.stop()
+        await ctx.send("Next Song")
+    else:
+        print("No music playing")
+        await ctx.send("No music playing failed")
+
 
 @bot.command(pass_context=True, aliases=['n', 'nex'])
 async def next(ctx):
