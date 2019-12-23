@@ -247,5 +247,16 @@ async def next(ctx):
         print("No music playing")
         await ctx.send("No music playing failed")
 
+@bot.command(pass_context=True, aliases=['v', 'vol'])
+async def volume(ctx, volume: int):
+
+    if ctx.voice_client is None:
+        return await ctx.send("Not connected to voice channel")
+
+    print(volume/100)
+
+    ctx.voice_client.source.volume = volume / 100
+    await ctx.send(f"Changed volume to {volume}%")
+
 #Maak verbinding met Discord en start de bot
 bot.run(os.environ['token'])
