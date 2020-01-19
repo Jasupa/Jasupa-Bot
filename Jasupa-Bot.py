@@ -9,9 +9,6 @@ import colorsys
 
 from os import system
 
-if not discord.opus.is_loaded():
-    discord.opus.load_opus('libopus.so')
-
 from discord.utils import get
 
 from discord.ext import commands #Importeer alle command-commands van Discord
