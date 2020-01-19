@@ -2,4 +2,3 @@ discord
 youtube_dl
 PyNaCl
 spotdl
-libopus0

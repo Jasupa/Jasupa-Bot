@@ -6,6 +6,8 @@ import sys
 import datetime
 import random
 import colorsys
+import ctypes
+import ctypes.util
 
 from os import system
 
@@ -14,6 +16,18 @@ from discord.utils import get
 from discord.ext import commands #Importeer alle command-commands van Discord
 
 bot = commands.Bot(command_prefix = 'ß') #Client variabel maken en prefix zetten
+
+print("ctypes - Find opus:")
+a = ctypes.util.find_library('opus')
+print(a)
+ 
+print("Discord - Load Opus:")
+b = discord.opus.load_opus(a)
+print(b)
+ 
+print("Discord - Is loaded:")
+c = discord.opus.is_loaded()
+print(c)
 
 #Wat gebeurt er als de bot klaar is met opstarten?
 @bot.event
