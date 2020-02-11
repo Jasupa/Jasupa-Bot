@@ -1,5 +1,4 @@
-discord
+discord[voice]
 youtube_dl
 PyNaCl
 spotdl
-discord.py[voice]
