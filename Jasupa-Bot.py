@@ -261,13 +261,10 @@ async def waifu(ctx):
     embed = discord.Embed(color=0xf2fa07)
     embed.set_image(url = random.choice(['https://remilia.cirno.pw/image/36828/7c424239-8414-4234-9c63-a122c57fd3f1.jpg',
     'https://remilia.cirno.pw/image/36828/691b4216-d95b-4068-a9f4-c32edc7bb72c.jpg',
-    'https://www.thiswaifudoesnotexist.net/example-174005.jpg',
-    'https://www.thiswaifudoesnotexist.net/example-121718.jpg',
-    'https://www.thiswaifudoesnotexist.net/example-172224.jpg',
-    'https://www.thiswaifudoesnotexist.net/example-190865.jpg',
-    'https://www.thiswaifudoesnotexist.net/example-20807.jpg',
-    'https://www.thiswaifudoesnotexist.net/example-81619.jpg',
-    'https://www.thiswaifudoesnotexist.net/example-197480.jpg'
+    'https://i.pinimg.com/originals/0e/8e/7e/0e8e7e3bc609f0a31e308d2fca075d78.png',
+    'https://a-static.besthdwallpaper.com/len-kagamine-behang-25446_L.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_RrHU90-xSPuZcffKc2GF97FsmmsAhUR05FhxoszuiAUZrpjT'
+
     
     
     
