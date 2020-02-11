@@ -2,3 +2,4 @@ discord[voice]
 youtube_dl
 PyNaCl
 spotdl
+virtualenv
