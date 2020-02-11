@@ -2,3 +2,5 @@ discord[voice]
 youtube_dl
 PyNaCl
 spotdl
+libopus
+fmmpeg
