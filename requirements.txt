@@ -2,4 +2,3 @@ discord[voice]
 youtube_dl
 PyNaCl
 spotdl
-pip3 install -r requirements.txt
