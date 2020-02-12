@@ -262,35 +262,18 @@ async def waifu(ctx):
     embed = discord.Embed(color=0xf2fa07)
     embed.set_image(url = random.choice(['https://remilia.cirno.pw/image/36828/7c424239-8414-4234-9c63-a122c57fd3f1.jpg',
     'https://remilia.cirno.pw/image/36828/691b4216-d95b-4068-a9f4-c32edc7bb72c.jpg',
+    ]))
+    embed.set_footer(text=f"Requested by: {ctx.author.name}")
+
+    await ctx.send(embed=embed)
+@bot.command(pass_context=True, aliases=['jas','jasu'])
+async def Jasupa(ctx):
+
+    embed = discord.Embed(color=0xf2fa07)
+    embed.set_image(url = random.choice([
     'https://i.pinimg.com/originals/0e/8e/7e/0e8e7e3bc609f0a31e308d2fca075d78.png',
     'https://a-static.besthdwallpaper.com/len-kagamine-behang-25446_L.jpg',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_RrHU90-xSPuZcffKc2GF97FsmmsAhUR05FhxoszuiAUZrpjT'
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     ]))
     embed.set_footer(text=f"Requested by: {ctx.author.name}")
 
