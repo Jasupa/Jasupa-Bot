@@ -262,6 +262,15 @@ async def waifu(ctx):
     embed = discord.Embed(color=0xf2fa07)
     embed.set_image(url = random.choice(['https://remilia.cirno.pw/image/36828/7c424239-8414-4234-9c63-a122c57fd3f1.jpg',
     'https://remilia.cirno.pw/image/36828/691b4216-d95b-4068-a9f4-c32edc7bb72c.jpg',
+    'https://f0.pngfuel.com/png/906/702/pink-haired-female-character-in-red-top-and-black-pants-outfit-illustration-anime-board-waifu-anime-png-clip-art.png',
+    'https://i.pinimg.com/736x/e5/88/20/e5882022981ba6268c3f7cdeac07d971.jpg',
+    'https://lh3.googleusercontent.com/dMggJXNJjA3TtcCkbZ7B6ozqqaFqwnBhR942vDmQlu27Npeh1827E89xKraId1b-rA',
+    'https://images-na.ssl-images-amazon.com/images/I/51pYggo33jL.jpg',
+    'https://i.pinimg.com/originals/da/b2/d4/dab2d405730473923d33a32e814950cd.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTunqBOtJywMoDdBrMGY_st7jhXN9ujq5g6KE7vlwNWb393nTfV',
+    'https://i.pinimg.com/originals/40/4f/42/404f42d916449d5d57383ad3df15e6ad.jpg',
+    'https://ih0.redbubble.net/image.582060261.0350/flat,800x800,075,f.u1.jpg',
+    'https://cache.desktopnexus.com/thumbseg/1903/1903382-bigthumbnail.jpg'
     ]))
     embed.set_footer(text=f"Requested by: {ctx.author.name}")
 
@@ -273,7 +282,13 @@ async def Jasupa(ctx):
     embed.set_image(url = random.choice([
     'https://i.pinimg.com/originals/0e/8e/7e/0e8e7e3bc609f0a31e308d2fca075d78.png',
     'https://a-static.besthdwallpaper.com/len-kagamine-behang-25446_L.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_RrHU90-xSPuZcffKc2GF97FsmmsAhUR05FhxoszuiAUZrpjT'
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_RrHU90-xSPuZcffKc2GF97FsmmsAhUR05FhxoszuiAUZrpjT',
+    'https://www.wallpaperup.com/uploads/wallpapers/2013/10/20/163545/5b70a058875bc581462087daf00ccad4-700.jpg',
+    'https://www.itl.cat/pngfile/big/141-1419644_len-rin-kagamine-len-and-rin-kagamine.jpg',
+    'https://www.itl.cat/pngfile/big/141-1419713_anime-kosuzume-vocaloid-kagamine-len-kagamine-rin-kagamine.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQOaNoWinIZH_BNOgfbzUZUsZPeeKPVj60y2hoIXVux6WwJ6DaY',
+    'https://static.zerochan.net/Kagamine.Len.full.238285.jpg',
+    'https://lh3.googleusercontent.com/proxy/ogy4VEEf2V0GH31ODq-LbfZO1SMVjgl2eg8lFC6maTEuE39NkeC---5WjX7OdVRBj5SyZrvR6qCxpk51-kMYx08Vk6P4V6IwYtlwoM0YgGnQdeAzz2MHs_doVBjdQ7a9um4sxJpjIFYzWnW1fA'
     ]))
     embed.set_footer(text=f"Requested by: {ctx.author.name}")
 
