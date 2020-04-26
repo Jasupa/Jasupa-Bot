@@ -275,6 +275,7 @@ async def waifu(ctx):
     embed.set_footer(text=f"Requested by: {ctx.author.name}")
 
     await ctx.send(embed=embed)
+    
 @bot.command(pass_context=True, aliases=['jas','jasu'])
 async def Jasupa(ctx):
 
@@ -293,6 +294,20 @@ async def Jasupa(ctx):
     embed.set_footer(text=f"Requested by: {ctx.author.name}")
 
     await ctx.send(embed=embed)
+
+
+@bot.command(pass_context=True, aliases=['repeat'])
+async def loop(ctx):
+    """Loops the currently playing song.
+    Invoke this command again to unloop the song.
+    """
+
+    if not ctx.voice_state.is_playing:
+        return await ctx.send('Nothing being played at the moment.')
+
+    # Inverse boolean value to loop and unloop.
+    ctx.voice_state.loop = not ctx.voice_state.loop
+    await ctx.message.add_reaction('✅')
 
 
 #Maak verbinding met Discord en start de bot
