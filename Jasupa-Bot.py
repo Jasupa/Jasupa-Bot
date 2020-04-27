@@ -26,6 +26,11 @@ players = {}
 async def on_ready():
     print("De bot is klaar met opstarten!")
 
+def check_queue(id):
+    if queues[id] != []:
+        player = queues[id].pop(0)
+        players[id] = player
+        player.start()
 
 @bot.command(pass_context=True, aliases=['j', 'joi'])
 async def join(ctx):
@@ -55,55 +60,12 @@ async def leave(ctx):
         await ctx.send("Don't think I am in a voice channel")
 
 @bot.command(pass_context=True, aliases=['p', 'pla'])
-async def play(ctx, *url: str):
-
-    def check_queue(id):
-        if queues[id] != []:
-            player = queues[id].pop(0)
-            players[id] = player
-            player.start()
-
-
-    song_there = os.path.isfile("song.mp3")
-    try:
-        if song_there:
-            os.remove("song.mp3")
-            queues.clear()
-            print("Removed old song file")
-    except PermissionError:
-        print("Trying to delete song file, but it's being played")
-        await ctx.send("ERROR: Music playing")
-
-    await ctx.send("Getting everything ready now")
-
-    voice = get(bot.voice_clients, guild=ctx.guild)
-
-    ydl_opts = {
-        'format': 'bestaudio/best',
-        'quiet': False,
-        'outtmpl': "./song.mp3",
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
-    }
-
-    song_search = " ".join(url)
-
-    try:
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            print("Downloading audio now\n")
-            ydl.download([f"ytsearch1:{song_search}"])
-    except:
-        print("FALLBACK: youtube-dl does not support this URL, using Spotify (This is normal if Spotify URL)")
-        c_path = os.path.dirname(os.path.realpath(__file__))
-        system("spotdl -ff song -f " + '"' + c_path + '"' + " -s " + song_search)
-
-    voice.play(discord.FFmpegPCMAudio("song.mp3"))
-    voice.source = discord.PCMVolumeTransformer(voice.source)
-    voice.source.volume = 0.07
-
+async def play(ctx, url):
+    server = ctx.message.server
+    voice_client = bot.voice_client_in(server)
+    player = await voice_client.create_ytdl_player(url, after=lambda: check_queue(server.id))
+    players[server.id]
+    player.start()
 
 @bot.command(pass_context=True, aliases=['pa', 'pau'])
 async def pause(ctx):
@@ -150,14 +112,14 @@ async def stop(ctx):
 async def queue(ctx, url):
 
     server = ctx.message.server
-    voice_client = client.voice_client_in(server)
+    voice_client = bot.voice_client_in(server)
     player = await voice_client.create_ytdl(url, after=lambda: check_queue(server.id))
 
     if server.id in queues:
         queues[server.id].append(player)
     else:
         queues[server.id] = [player]
-    await client.say('Video is placed in the queue')
+    await bot.say('Video is placed in the queue')
 
 
 @bot.command(pass_context=True, aliases=['n', 'nex'])
