@@ -100,7 +100,7 @@ async def play(ctx, *url: str):
         c_path = os.path.dirname(os.path.realpath(__file__))
         system("spotdl -ff song -f " + '"' + c_path + '"' + " -s " + song_search)
 
-    voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: check_queue())
+    voice.play(discord.FFmpegPCMAudio("song.mp3"))
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = 0.07
 
@@ -157,7 +157,7 @@ async def queue(ctx, url):
         queues[server.id].append(player)
     else:
         queues[server.id] = [player]
-    await  client.say('Video is placed in the queue')
+    await client.say('Video is placed in the queue')
 
 
 @bot.command(pass_context=True, aliases=['n', 'nex'])
