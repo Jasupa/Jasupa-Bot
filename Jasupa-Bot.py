@@ -17,6 +17,9 @@ from discord.ext import commands #Importeer alle command-commands van Discord
 
 bot = commands.Bot(command_prefix = 'ß') #Client variabel maken en prefix zetten
 
+queues = {}
+players = {}
+
 
 #Wat gebeurt er als de bot klaar is met opstarten?
 @bot.event
@@ -70,7 +73,6 @@ async def play(ctx, *url: str):
     except PermissionError:
         print("Trying to delete song file, but it's being played")
         await ctx.send("ERROR: Music playing")
-        return
 
     await ctx.send("Getting everything ready now")
 
